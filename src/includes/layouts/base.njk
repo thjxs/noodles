@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title or metadata.title }}</title>
+    <meta
+      name="description"
+      content="{{ description or metadata.description }}"
+    />
+    <link rel="stylesheet" href="{{ '/css/main.css' | url }}" />
+    <link
+      rel="alternate"
+      href="{{ metadata.feed.path | url }}"
+      type="application/atom+xml"
+      title="{{ metadata.title }}"
+    />
+    <link
+      rel="alternate"
+      href="{{ metadata.jsonfeed.path | url }}"
+      type="application/json"
+      title="{{ metadata.title }}"
+    />
+    <script src="/main.js"></script>
+  </head>
+  <body class="flex flex-col">
+    <header id="header" class="flex-shrink-0 relative">
+      <h1 class="text-3xl font-bold text-center text-white opacity-50">
+        <a href="{{ '/' | url }}">{{ metadata.title }}</a>
+      </h1>
+      <dark-mode
+        class="absolute right-0 top-0 flex items-center h-full px-4"
+      ></dark-mode>
+    </header>
+    <main class="flex-auto flex-shrink-0 bg-white">{{ content | safe }}</main>
+    <footer id="footer" class="flex items-center">
+      <div class="p-4 text-white text-sm">
+        <p>
+          大家好，这里是
+          <strong><a href="{{'/about-noodles' | url}}">Noodles</a></strong
+          >,
+          为了发掘新事物而进行各种各样尝试的一个网站，如果在这里也有你喜欢的东东，请务必给我一个
+          <a
+            class="inline-flex align-middle"
+            href="https://github.com/thjxs/noodles"
+          >
+            <svg
+              fill="currentColor"
+              height="16"
+              viewBox="0 0 16 16"
+              version="1.1"
+              width="16"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"
+              ></path>
+            </svg>
+          </a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

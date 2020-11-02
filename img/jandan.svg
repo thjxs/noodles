@@ -1,0 +1,69 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24">
+  <!-- head -->
+  <path
+    d="M11,0 v2 h2 v-1 h-1 v-1 h-1"
+    fill="red"
+  />
+  <!-- back -->
+  <path
+    d="M4,7 v2 h1 v-2z M19,7 v2 h1 v-2z
+    M4,14 v1 h-1 v1 h1 v2 h1 v1 h1 v1 h1 v1 h10
+    v-1 h1 v-1 h1 v-1 h1 v-2 h1 v-1 h-1 v-1"
+    fill="#fec712"
+  />
+  <!-- main -->
+  <path
+    d="M13,2 h2 v1 h2 v1 h1 v1 h1 v4 h2 v1 h1 v1 h1 v4 h-3 v-1 h-1 v4
+    h-1 v1 h-1 v1 h-10
+    v-1 h-1 v-1 h-1 v-4 h-1 v1 h-3 v-4 h1 v-1 h1 v-1 h2 v-4
+    h1 v-1 h1 v-1 h2 v-1"
+    fill="#fef200"
+  />
+  <!-- foot eye -->
+  <path
+    d="M8,20 v2 h-1 v1 h3 v-1 h-1 v-2
+    M15,20 v2 h-1 v1 h3 v-1 h-1 v-2
+    M9,7 v1 h1 v-1
+    M14,7 v1 h1 v-1"
+    fill="back"
+  />
+  <path
+    d="M11,9 v2 h2 v-2"
+    fill="orange"
+  />
+
+  <path
+    d="M70,70 v30 h-10 v70 h10 v20 h10 v10 h10 v10 h10 v10 h100
+    v-10 h10 v-10 h10 v-10 h10 v-30 h10 v10 h-10 v-100
+    "
+    stroke="#fec712" stroke-width="10"
+    fill="#fec712"
+  />
+  <path
+    d="M 150,30 h30, v10, h20, v10, h10, v10, h10, v40 h20
+    v10 h10 v10 h10 v40 h-20 v-10 h-20 v40 h-10 v10
+    h-10 v10 h-100
+    v-10 h-10 v-10 h-10 v-40 h-20 v10 h-20 v-40 h10
+    v-10 h10 v-10 h20 v-40 h10 v-10 h10 v-10 h20 v-10z
+    "
+    fill="#fef200" stroke="#fef200" />
+  <path
+    d="M 140,0 v20 h20"
+    stroke="red" fill="none" stroke-width="10"
+  />
+  <path
+    d="M 120,80 h10 M 170,80 h10"
+    stroke="black" stroke-width="10"
+  />
+  <path
+    d="M 140,100 h20 v20 h-20 z"
+    fill="#ff7f26" stroke-width="10"
+  />
+  <path
+    d="M110,215 v20 M95,240 h30 M190,215 v20 M175,240 h30"
+    fill="black" stroke="black" stroke-width="10"
+  />
+</svg>

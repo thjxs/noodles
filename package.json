@@ -1,0 +1,36 @@
+{
+  "name": "noodles",
+  "version": "1.0.0",
+  "description": "await fetch",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "css": "postcss main.css -o dist/css/main.css ",
+    "js": "terser main.js -o dist/main.js",
+    "build": "eleventy && npm run css && npm run js",
+    "watch": "eleventy --watch",
+    "serve": "eleventy --serve",
+    "start": "eleventy --serve",
+    "debug": "DEBUG=* eleventy"
+  },
+  "author": {
+    "name": "thjxs",
+    "email": "tanhongjian@outlook.com"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.11.1",
+    "@11ty/eleventy-plugin-rss": "^1.0.9",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.1",
+    "autoprefixer": "^10.0.1",
+    "cssnano": "^4.1.10",
+    "html-minifier": "^4.0.0",
+    "luxon": "^1.21.3",
+    "markdown-it": "^8.4.2",
+    "markdown-it-anchor": "^5.2.5",
+    "minify-xml": "^2.1.2",
+    "postcss": "^8.1.4",
+    "postcss-cli": "^8.1.0",
+    "tailwindcss": "^1.9.6",
+    "terser": "^5.3.8"
+  }
+}

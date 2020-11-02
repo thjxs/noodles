@@ -1,0 +1,33 @@
+---
+layout: layouts/base.njk
+---
+
+<article>
+  <header class="p-2 sm:p-4">
+    <h1>{{ title }}</h1>
+    <p>
+      时间
+      <time class="px-1" datetime="{{date | htmlDateString}}"
+        >{{ date | htmlDateString }}</time
+      >
+      {% if tags %} · 标签 {% for tag in tags %} {%- if
+      collections.tagList.indexOf(tag) != -1 -%}
+      <a
+        data-tag="{{tag}}"
+        class="bg-red-500 text-white text-xs px-1 mx-1"
+        href="/tags/{{tag}}"
+        >{{tag}}</a
+      >
+      {%- endif -%} {% endfor %} {% endif %}
+    </p>
+  </header>
+
+  <main class="p-2 sm:p-4">{{ content | safe }}</main>
+  <hr />
+  <footer class="p-2 sm:p-4 my-2 border-8 article-info">
+    {% if ref %}
+    <p>原文：<a href="{{ref}}">{{ref}}</a></p>
+    {% endif %}
+    <p>作者：{{author | markdown | safe}}</p>
+  </footer>
+</article>

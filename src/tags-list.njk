@@ -1,0 +1,17 @@
+---
+permalink: /tags/
+layout: layouts/home.njk
+---
+
+<h1>标签列表</h1>
+<hr />
+<div class="mt-2">
+  {% for tag in collections.tagList %}
+  <a
+    data-tag="{{ tag }}"
+    class="bg-red-500 text-white px-1 rounded"
+    href="/tags/{{tag}}"
+    >{{tag}}</a
+  >
+  {% endfor %}
+</div>

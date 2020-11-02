@@ -1,0 +1,217 @@
+:root {
+  --light-bg: #feebc8;
+  --dark-bg: gray;
+  --code-bg: #272822;
+  --code-text: #f8f8f2;
+  --linear-from: #ed8936;
+  --linear-to: #f6ad55;
+  --bg-color: var(--light-bg);
+}
+:root.dark {
+  --linear-from: #f6ad55;
+  --linear-to: var(--code-bg);
+  --bg-color: var(--dark-bg);
+}
+@tailwind base;
+
+html {
+  height: 100%;
+}
+
+body {
+  max-width: 800px;
+  height: 100%;
+  margin: 0 auto;
+  background-color: var(--bg-color);
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+  font-size: 14px;
+  line-height: 1.375;
+  direction: ltr;
+  white-space: pre;
+  tab-size: 2;
+  hyphens: none;
+  background-color: var(--code-bg);
+  color: var(--code-text);
+}
+
+pre[class*="language-"] {
+  padding: 1.5em 1em;
+  margin: 0.5em -1rem;
+  overflow: auto;
+}
+
+@media screen and (max-width: 425px) {
+  pre[class*="language-"] {
+    padding: 1.5em .5rem;
+    margin: 0.5em -.5rem;
+  }
+}
+:not(pre) > code[class*="language-"] {
+  padding: 0.1em;
+  border-radius: 0.3em;
+}
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #75715e;
+}
+.token.punctuation {
+  color: #f8f8f2;
+}
+.token.namespace {
+  opacity: 0.7;
+}
+.token.operator,
+.token.boolean,
+.token.number {
+  color: #fd971f;
+}
+.token.property {
+  color: #f4bf75;
+}
+.token.tag {
+  color: #66d9ef;
+}
+.token.string {
+  color: #a1efe4;
+}
+.token.selector {
+  color: #ae81ff;
+}
+.token.attr-name {
+  color: #fd971f;
+}
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #a1efe4;
+}
+.token.attr-value,
+.token.keyword,
+.token.control,
+.token.directive,
+.token.unit {
+  color: #a6e22e;
+}
+.token.statement,
+.token.regex,
+.token.atrule {
+  color: #a1efe4;
+}
+.token.placeholder,
+.token.variable {
+  color: #66d9ef;
+}
+.token.deleted {
+  text-decoration: line-through;
+}
+.token.inserted {
+  border-bottom: 1px dotted #f9f8f5;
+  text-decoration: none;
+}
+.token.italic {
+  font-style: italic;
+}
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.important {
+  color: #f92672;
+}
+.token.entity {
+  cursor: help;
+}
+pre > code.highlight {
+  outline: 0.4em solid #f92672;
+  outline-offset: 0.4em;
+}
+
+.article-info {
+  border-color: #f56565;
+}
+
+.article-info a {
+  color: #2196f3;
+  @apply underline;
+}
+
+.article-info a:hover {
+  background-color: #f56565;
+  @apply text-white;
+}
+
+.direct-link {
+  @apply invisible;
+}
+
+h4:hover .direct-link,
+h3:hover .direct-link,
+h2:hover .direct-link {
+  @apply visible;
+}
+
+@tailwind components;
+
+@tailwind utilities;
+
+[data-tag="translate"] {
+  @apply bg-blue-600;
+}
+
+#header {
+  height: 64px;
+  background: linear-gradient(45deg, var(--linear-from), var(--linear-to));
+}
+
+#header h1 {
+  line-height: 64px;
+}
+
+@media screen and (max-width: 425px) {
+  #header {
+    height: 32px;
+  }
+  #header h1 {
+    font-size: 20px;
+    line-height: 32px;
+  }
+}
+
+#footer {
+  min-height: 12em;
+  padding-right: 12em;
+  background-size: 10em;
+  background-repeat: no-repeat;
+  background-image: url("/img/jandan.svg");
+  background-position-x: right;
+  background-position-y: center;
+  background-color: #ed8936;
+}
+
+@media screen and (max-width: 425px) {
+  #footer {
+    padding-right: 6em;
+    background-size: 6em;
+  }
+}
+
+@layer base {
+  h1 {
+    @apply text-2xl;
+  }
+  h2 {
+    @apply text-xl;
+  }
+  h3 {
+    @apply text-lg;
+  }
+  h4 {
+    @apply text-base;
+  }
+}

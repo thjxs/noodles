@@ -1,0 +1,20 @@
+---
+layout: layouts/home.njk
+---
+
+{% set maxPosts = collections.posts.length | min(20) %}
+<h1>
+  最新的{% if maxPosts == 1 %}文章{% else %}{{ maxPosts }}篇文章{% endif %}
+</h1>
+<hr />
+
+{% set postslist = collections.posts | head(-20) %} {% set postslistCounter =
+collections.posts | length %} {% include "postslist.njk" %}
+
+<p class="text-sm py-4">
+  <a
+    class="text-orange-500 border-b border-orange-300"
+    href="{{ '/posts/' | url }}"
+    >查看更多</a
+  >
+</p>

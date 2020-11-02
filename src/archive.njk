@@ -1,0 +1,8 @@
+---
+layout: layouts/home.njk
+permalink: /posts/
+---
+
+<h1>文章列表</h1>
+<hr />
+{% set postslist = collections.posts %} {% include "postslist.njk" %}
