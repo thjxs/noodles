@@ -55,6 +55,12 @@ module.exports = function (eleventyConfig) {
     return Math.min.apply(null, numbers);
   });
 
+  eleventyConfig.addCollection('posts', (collection) => {
+    return collection.getFilteredByGlob('src/posts/*.md')
+      .sort((a, b) => b.date - a.date);
+  });
+
+
   eleventyConfig.addCollection("tagList", function (collection) {
     let tagSet = new Set();
     collection.getAll().forEach(function (item) {

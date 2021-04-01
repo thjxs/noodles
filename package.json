@@ -4,7 +4,7 @@
   "description": "await fetch",
   "scripts": {
     "clean": "rm -rf dist",
-    "css": "postcss main.css -o dist/css/main.css ",
+    "css": "cross-env NODE_ENV=production postcss main.css -o dist/css/main.css ",
     "js": "terser main.js -o dist/main.js",
     "build": "eleventy && npm run css && npm run js",
     "watch": "eleventy --watch",
@@ -18,19 +18,20 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@11ty/eleventy": "^0.11.1",
-    "@11ty/eleventy-plugin-rss": "^1.0.9",
-    "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.1",
-    "autoprefixer": "^10.0.1",
+    "@11ty/eleventy": "^0.12.1",
+    "@11ty/eleventy-plugin-rss": "^1.1.1",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^3.1.0",
+    "autoprefixer": "^10.2.5",
+    "cross-env": "^7.0.3",
     "cssnano": "^4.1.10",
     "html-minifier": "^4.0.0",
-    "luxon": "^1.21.3",
-    "markdown-it": "^8.4.2",
-    "markdown-it-anchor": "^5.2.5",
-    "minify-xml": "^2.1.2",
-    "postcss": "^8.1.4",
-    "postcss-cli": "^8.1.0",
-    "tailwindcss": "^1.9.6",
-    "terser": "^5.3.8"
+    "luxon": "^1.26.0",
+    "markdown-it": "^12",
+    "markdown-it-anchor": "^7",
+    "minify-xml": "^2.5.0",
+    "postcss": "^8.2.9",
+    "postcss-cli": "^8.3.1",
+    "tailwindcss": "^2",
+    "terser": "^5.6.1"
   }
 }
