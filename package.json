@@ -31,7 +31,7 @@
     "minify-xml": "^2.5.0",
     "postcss": "^8.2.9",
     "postcss-cli": "^8.3.1",
-    "tailwindcss": "^2",
+    "tailwindcss": "^2.1.1",
     "terser": "^5.6.1"
   }
 }
