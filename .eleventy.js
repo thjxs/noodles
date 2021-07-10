@@ -4,6 +4,8 @@ const pluginRss = require("@11ty/eleventy-plugin-rss");
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
+const markdownItEmbedImage = require('./md-embed-image.js');
+const markdownItImplicitFigures = require('markdown-it-implicit-figures');
 const htmlMin = require("html-minifier");
 const xmlMin = require("minify-xml");
 const prismAddon = require("./prism-addon");
@@ -104,7 +106,10 @@ module.exports = function (eleventyConfig) {
     permalink: true,
     permalinkClass: "direct-link",
     permalinkSymbol: "#",
-  });
+  }).use(markdownItImplicitFigures, {
+    figcaption: true
+  }).use(markdownItEmbedImage);
+
   eleventyConfig.setLibrary("md", markdownLibrary);
   eleventyConfig.addFilter("markdown", (string) =>
     markdownLibrary.renderInline(string)

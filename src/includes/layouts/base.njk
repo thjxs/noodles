@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ title or metadata.title }}</title>
+    <title>{{ (title or metadata.title) | markdown | striptags }}</title>
     <meta
       name="description"
       content="{{ description or metadata.description }}"
@@ -32,7 +32,7 @@
         class="absolute right-0 top-0 flex items-center h-full px-4"
       ></dark-mode>
     </header>
-    <main class="flex-auto flex-shrink-0 bg-white">{{ content | safe }}</main>
+    <main class="flex-auto flex-shrink-0 bg-white p-2">{{ content | safe }}</main>
     <footer id="footer" class="flex items-center">
       <div class="p-4 text-white text-sm">
         <p>

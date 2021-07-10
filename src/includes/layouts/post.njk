@@ -3,9 +3,9 @@ layout: layouts/base.njk
 ---
 
 <article>
-  <header class="p-2 sm:p-4">
-    <h1>{{ title }}</h1>
-    <p>
+  <header>
+    <h1>{{ title | markdown | safe }}</h1>
+    <p class='meta'>
       时间
       <time class="px-1" datetime="{{date | htmlDateString}}"
         >{{ date | htmlDateString }}</time
@@ -22,7 +22,7 @@ layout: layouts/base.njk
     </p>
   </header>
 
-  <main class="p-2 sm:p-4">{{ content | safe }}</main>
+  <main>{{ content | safe }}</main>
   <hr />
   <footer class="p-2 sm:p-4 my-2 border-8 article-info">
     {% if ref %}
