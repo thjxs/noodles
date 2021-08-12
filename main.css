@@ -198,6 +198,17 @@ h2:hover .direct-link {
 [data-tag="translate"] {
   @apply bg-blue-600;
 }
+[data-tag="translate"]:hover {
+  @apply bg-blue-500;
+}
+
+[data-tag="develop"] {
+  @apply bg-green-600;
+}
+
+[data-tag="develop"]:hover {
+  @apply bg-green-500;
+}
 
 #header {
   height: 64px;
