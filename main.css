@@ -31,6 +31,20 @@ main a {
   @apply border-b border-orange-300 text-orange-700 hover:bg-orange-600 hover:text-white transition-colors duration-300 ease-out;
 }
 
+ol, ul {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-left: 2em;
+}
+
+ol {
+  list-style: decimal;
+}
+
+ul {
+  list-style: circle;
+}
+
 figure {
   @apply text-center;
 }
