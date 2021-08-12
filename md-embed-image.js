@@ -50,7 +50,6 @@ module.exports = md => {
     for (const t of state.tokens) {
       // Skip non-image tokens.
       if (t.type !== 'image') continue;
-      console.log(t)
       let imgSrc = t.attrGet('src');
       if (imgSrc.includes('width=')) {
         const width = imgSrc.split('width=')[1]
