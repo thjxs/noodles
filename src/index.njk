@@ -11,7 +11,7 @@ layout: layouts/home.njk
 {% set postslist = collections.posts | head(-20) %} {% set postslistCounter =
 collections.posts | length %} {% include "postslist.njk" %}
 
-<p class="text-sm py-4">
+<p class="text-sm">
   <a
     class="text-orange-500 border-b border-orange-300"
     href="{{ '/posts/' | url }}"
