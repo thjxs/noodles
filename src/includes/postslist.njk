@@ -4,7 +4,7 @@
   style="counter-reset: start-from {{ (postslistCounter or postslist.length) + 1 }}"
   start="{{postlistCounter or postslist.length}}"
 >
-  {% for post in postslist | reverse %}
+  {% for post in postslist %}
   <li>
     <a
       class="border-b border-orange-300 text-orange-700 hover:bg-orange-600 hover:text-white transition-colors duration-300 ease-out"
@@ -21,7 +21,7 @@
     {% for tag in post.data.tags %} {%- if collections.tagList.indexOf(tag) !=
     -1 -%} {% set tagUrl %}/tags/{{ tag }}/{% endset %}
     <a
-      data-tag="{{ tag }}"
+      data-tag="{{ tag | toLowerCase}}"
       class="bg-red-500 text-white text-xs px-1 rounded hover:shadow"
       href="{{ tagUrl | url }}"
       >{{ tag }}</a
