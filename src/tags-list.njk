@@ -9,9 +9,8 @@ layout: layouts/home.njk
   {% for tag in collections.tagList %}
   <a
     data-tag="{{ tag }}"
-    class="bg-red-500 text-white px-1 rounded"
+    class="bg-red-500 text-white px-1 rounded border-0"
     href="/tags/{{tag}}"
-    >{{tag}}</a
-  >
+    >{{tag}}</a>
   {% endfor %}
 </div>

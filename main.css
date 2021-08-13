@@ -209,6 +209,28 @@ h2:hover .direct-link {
 [data-tag="develop"]:hover {
   @apply bg-green-500;
 }
+[data-tag="cli"] {
+  @apply bg-red-600;
+}
+
+[data-tag="cli"]:hover {
+  @apply bg-red-500;
+}
+[data-tag="internals"] {
+  @apply bg-pink-600;
+}
+
+[data-tag="internals"]:hover {
+  @apply bg-pink-500;
+}
+
+[data-tag="v8"] {
+  background-color: #4285f4;
+}
+
+[data-tag="v8"]:hover {
+  background-color: #5189d6;
+}
 
 #header {
   height: 64px;
