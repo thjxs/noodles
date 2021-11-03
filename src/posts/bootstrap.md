@@ -11,29 +11,29 @@ description: "适用于 Windows 系统的前端开发及日常娱乐"
 
 准备全新的 `Windows` 系统及以下列出的软件，并一一安装
 
-* [Visual Studio Code - Code Editing. Redefined](https://code.visualstudio.com/)
-* [Node.js (nodejs.org)](https://nodejs.org/en/)
-* [Sublime Text - Text Editing, Done Right](https://www.sublimetext.com/)
-* [Sublime Merge | Git client from the makers of Sublime Text](https://www.sublimemerge.com/)
-* [7-Zip](https://www.7-zip.org/)
-* [Yarn2](https://yarnpkg.com/) or [Yarn 1](https://classic.yarnpkg.com/lang/en/)
-* [Typora — a markdown editor, markdown reader.](https://typora.io/)
-* [Windows Terminal](https://www.microsoft.com/zh-cn/p/windows-terminal/9n0dx20hk701?rtc=1&activetab=pivot:overviewtab)
-* [Bitwarden Open Source Password Manager | Bitwarden](https://bitwarden.com/)
-* [Drawboard: Easier PDF markup software](https://www.drawboard.com/)
-* [Git (git-scm.com)](https://git-scm.com/)
-* [Microsoft To Do: Lists, Tasks & Reminders](https://www.microsoft.com/zh-cn/p/microsoft-to-do-lists-tasks-reminders/9nblggh5r558#activetab=pivot:overviewtab)
-* [Postman](https://www.postman.com/downloads/)
-* [Steam (steampowered.com)](https://store.steampowered.com/)
-* [Graphviz](http://graphviz.org/)
+- [Visual Studio Code - Code Editing. Redefined](https://code.visualstudio.com/)
+- [Node.js (nodejs.org)](https://nodejs.org/en/)
+- [Sublime Text - Text Editing, Done Right](https://www.sublimetext.com/)
+- [Sublime Merge | Git client from the makers of Sublime Text](https://www.sublimemerge.com/)
+- [7-Zip](https://www.7-zip.org/)
+- [Yarn2](https://yarnpkg.com/) or [Yarn 1](https://classic.yarnpkg.com/lang/en/)
+- [Typora — a markdown editor, markdown reader.](https://typora.io/)
+- [Windows Terminal](https://www.microsoft.com/zh-cn/p/windows-terminal/9n0dx20hk701?rtc=1&activetab=pivot:overviewtab)
+- [Bitwarden Open Source Password Manager | Bitwarden](https://bitwarden.com/)
+- [Drawboard: Easier PDF markup software](https://www.drawboard.com/)
+- [Git (git-scm.com)](https://git-scm.com/)
+- [Microsoft To Do: Lists, Tasks & Reminders](https://www.microsoft.com/zh-cn/p/microsoft-to-do-lists-tasks-reminders/9nblggh5r558#activetab=pivot:overviewtab)
+- [Postman](https://www.postman.com/downloads/)
+- [Steam (steampowered.com)](https://store.steampowered.com/)
+- [Graphviz](http://graphviz.org/)
 
 ## 环境变量的设置
 
 为了让某些软件能够在命令行的使用，添加下列路径到用户的环境变量或者系统变量
 
-* `C:\Program Files\Sublime Text`
-* `C:\Program Files\Graphviz\bin`
-* `C:\Program Files\7-Zip`
+- `C:\Program Files\Sublime Text`
+- `C:\Program Files\Graphviz\bin`
+- `C:\Program Files\7-Zip`
 
 ## 软件配置
 
@@ -54,26 +54,30 @@ description: "适用于 Windows 系统的前端开发及日常娱乐"
 
 ### VS Code 的插件
 
-* EditorConfig
-* Sublime Text Keymap and Settings Importer
-* Tailwind CSS IntelliSense
-* TODO Highlight v2
+- EditorConfig
+- Sublime Text Keymap and Settings Importer
+- Tailwind CSS IntelliSense
+- TODO Highlight v2
 
 ### Sublime Text 的插件
 
-* EditorConfig
-* Emmet
-* Package Control
+- EditorConfig
+- Emmet
+- Package Control
 
 ### bash
+
 .bashrc
+
 ```bash
 alias merge="start merge"
 alias typora="start typora"
 ```
 
 ### vim
+
 .vimrc
+
 ```bash
 set history=100
 
@@ -144,6 +148,7 @@ function! HasPaste()
     return ''
 endfunction
 ```
+
 ### git bash
 
 ```bash
@@ -173,4 +178,3 @@ PS1="$PS1"'\[\033[0m\]'        # change color
 # PS1="$PS1"'\n'                 # new line
 PS1="$PS1"' $ '                 # prompt: always $
 ```
-

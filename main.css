@@ -97,6 +97,27 @@ pre {
     margin: 0.5em -0.5rem;
   }
 }
+.post-url {
+  @apply border-b;
+  @apply border-orange-300;
+  @apply text-orange-700;
+  @apply hover:bg-orange-600;
+  @apply hover:text-white;
+}
+.post-url,
+.post-url code {
+  @apply transition-colors;
+  @apply duration-300;
+  @apply ease-out;
+}
+.post-url code {
+  @apply p-0;
+  @apply bg-orange-50;
+}
+.post-url:hover code {
+  @apply bg-orange-600;
+}
+
 :not(pre) > code[class*="language-"] {
   padding: 0.1em;
   border-radius: 0.3em;

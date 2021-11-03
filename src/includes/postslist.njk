@@ -7,10 +7,9 @@
   {% for post in postslist %}
   <li>
     <a
-      class="border-b border-orange-300 text-orange-700 hover:bg-orange-600 hover:text-white transition-colors duration-300 ease-out"
+      class="post-url"
       href="{{ post.url | url }}"
-      >{% if post.data.title %}{{ post.data.title | markdown | safe }}{% else %}<code
-        >{{ post.url }}</code
+      >{% if post.data.title %}{{ post.data.title | markdown | safe }}{% else %}<code>{{ post.url }}</code
       >{% endif %}</a
     >
     <time

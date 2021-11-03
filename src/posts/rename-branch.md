@@ -15,7 +15,7 @@ description: "通过 Github API 将你仓库的 master 分支改成 main"
 
 下面是仓库重命名所需要的 API，这里采用的是 [`REST API`](https://docs.github.com/en/free-pro-team@latest/v3)
 
-获取仓库列表，per_page 最大是100
+获取仓库列表，per_page 最大是 100
 
 ```
 GET /user/repos
@@ -27,7 +27,7 @@ GET /user/repos
 GET /repos/:owner/:repo/branches
 ```
 
-创建分支，分支是存储git提交的哈希的 Git 引用
+创建分支，分支是存储 git 提交的哈希的 Git 引用
 
 ```
 POST /repos/:owner/:repo/git/refs
@@ -56,7 +56,6 @@ const response = await octokit.request("GET /orgs/:org/repos", {
   type: "private",
 });
 ```
-
 
 以上，感谢你的阅读
 

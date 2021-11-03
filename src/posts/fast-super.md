@@ -1,10 +1,10 @@
 ---
-title: '`super` 属性的快速访问'
-author: '[Marja Hölttä](https://twitter.com/marjakh), super optimizer'
+title: "`super` 属性的快速访问"
+author: "[Marja Hölttä](https://twitter.com/marjakh), super optimizer"
 date: 2021-02-18
 tags:
   - JavaScript
-description: 'Faster super property access in V8 v9.0'
+description: "Faster super property access in V8 v9.0"
 ref: "https://v8.dev.blog/fast-super"
 ---
 
@@ -18,28 +18,29 @@ ref: "https://v8.dev.blog/fast-super"
 
 ![Compare super property access to regular property access, unoptimized](https://v8.dev/_img/fast-super/super-no-opt.svg)
 
-超级属性访问很难进行基准测试，因为它必须发生在函数内部。 我们不能对单个属性访问进行基准测试，而只能对更大的工作块进行基准测试。 因此，函数调用开销包含在测量中。 上图有点低估了超级属性访问和普通属性访问之间的差异，但它们足以说明新旧超级属性访问之间的差异。 
+超级属性访问很难进行基准测试，因为它必须发生在函数内部。 我们不能对单个属性访问进行基准测试，而只能对更大的工作块进行基准测试。 因此，函数调用开销包含在测量中。 上图有点低估了超级属性访问和普通属性访问之间的差异，但它们足以说明新旧超级属性访问之间的差异。
 
-在未优化（解释）模式下，超级属性访问总是比普通属性访问慢，因为我们需要做更多的加载（从上下文中读取 home 对象并从 home 对象中读取 `__proto__` ）。 在优化的代码中，我们已经尽可能将 home 对象嵌入为常量。 这也可以通过将其 `__proto__` 嵌入为常量来进一步改进。 
+在未优化（解释）模式下，超级属性访问总是比普通属性访问慢，因为我们需要做更多的加载（从上下文中读取 home 对象并从 home 对象中读取 `__proto__` ）。 在优化的代码中，我们已经尽可能将 home 对象嵌入为常量。 这也可以通过将其 `__proto__` 嵌入为常量来进一步改进。
 
 ### Prototypal inheritance and `super`
 
-让我们从基础开始 - 超级属性访问甚至意味着什么？ 
+让我们从基础开始 - 超级属性访问甚至意味着什么？
+
 ```js
 class A {}
 A.prototype.x = 100;
 
 class B extends A {
-    m() {
-        return super.x;
-    }
+  m() {
+    return super.x;
+  }
 }
 
 const b = new B();
 b.m();
 ```
 
-现在A是B的超类，如你所见，b.m() 返回 100。
+现在 A 是 B 的超类，如你所见，b.m() 返回 100。
 
 ![Class inheritance diagram](https://v8.dev/_img/fast-super/inheritance-1.svg?width=100)
 
@@ -61,25 +62,25 @@ b ->
     Object.prototype.__proto__ === null
 ```
 
-通过这个链，`b` 可以访问任何这些对象中定义的所有属性。 方法 `m` 是 `B.prototype` —— `B.prototype.m` 的一个属性 —— 这就是 `b.m()` 成立的原因。 
+通过这个链，`b` 可以访问任何这些对象中定义的所有属性。 方法 `m` 是 `B.prototype` —— `B.prototype.m` 的一个属性 —— 这就是 `b.m()` 成立的原因。
 
-现在我们可以在 `m` 中定义 `super.x` 作为属性查找，我们开始在 *home 对象的* `__proto__` 中查找属性 `x`，并沿着原型链向上走直到找到它。 
+现在我们可以在 `m` 中定义 `super.x` 作为属性查找，我们开始在 _home 对象的_ `__proto__` 中查找属性 `x`，并沿着原型链向上走直到找到它。
 
-home 对象是定义方法的对象 - 在这种情况下，`m` 的 home 对象是 `B.prototype`。 它的 `__proto__` 是 `A.prototype`，所以我们开始寻找属性 `x`。 我们将`A.prototype`称为*查找起始对象*。 在这种情况下，我们会立即在查找起始对象中找到属性“x”，但通常它也可能位于原型链的更远位置。 
+home 对象是定义方法的对象 - 在这种情况下，`m` 的 home 对象是 `B.prototype`。 它的 `__proto__` 是 `A.prototype`，所以我们开始寻找属性 `x`。 我们将`A.prototype`称为*查找起始对象*。 在这种情况下，我们会立即在查找起始对象中找到属性“x”，但通常它也可能位于原型链的更远位置。
 
-如果 `B.prototype` 有一个名为 `x` 的属性，我们会忽略它，因为我们开始在原型链中寻找它。 此外，在这种情况下，超级属性查找不依赖于 *receiver* - 调用方法时作为 `this` 值的对象。 
+如果 `B.prototype` 有一个名为 `x` 的属性，我们会忽略它，因为我们开始在原型链中寻找它。 此外，在这种情况下，超级属性查找不依赖于 _receiver_ - 调用方法时作为 `this` 值的对象。
 
 ```javascript
 B.prototype.m.call(some_other_object); // still returns 100
 ```
 
-如果该属性有一个 getter，则接收器将作为 `this` 值传递给 getter。 
+如果该属性有一个 getter，则接收器将作为 `this` 值传递给 getter。
 
-总结一下：在超级属性访问中，`super.x`，查找起始对象是home对象的`__proto__`，接收者是发生超级属性访问的方法的接收者。
+总结一下：在超级属性访问中，`super.x`，查找起始对象是 home 对象的`__proto__`，接收者是发生超级属性访问的方法的接收者。
 
-在正常的属性访问中，`o.x`，我们开始在 `o` 中查找属性 `x` 并沿着原型链向上走。 如果`x` 碰巧有一个getter，我们也将使用`o` 作为接收器——查找起始对象和接收器是同一个对象（`o`）。
+在正常的属性访问中，`o.x`，我们开始在 `o` 中查找属性 `x` 并沿着原型链向上走。 如果`x` 碰巧有一个 getter，我们也将使用`o` 作为接收器——查找起始对象和接收器是同一个对象（`o`）。
 
-*超级属性访问就像常规属性访问一样，其中查找起始对象和接收者是不同的。* 
+_超级属性访问就像常规属性访问一样，其中查找起始对象和接收者是不同的。_
 
 ### 实现更快的 `super`
 
@@ -95,46 +96,46 @@ V8 的数据驱动的内联缓存系统是实现快速属性访问的核心部�
 
 超级属性访问的优化代码由 [TurboFan](https://v8.dev/docs/turbofan) 编译器的 JSNativeContextSpecialization 阶段生成。该实现概括了现有的属性查找机制([`JSNativeContextSpecialization::ReduceNamedAccess`](https://source.chromium.org/chromium/chromium/src/+/master:v8/src/compiler/js-native-context-specialization.cc;l=1130))来处理接收者和查找起始对象不同的情况。
 
-当我们将 home 对象移出存储它的 `JSFunction` 时，优化的代码变得更加优化。它现在存储在类上下文中，这使得 TurboFan 尽可能将其作为常量嵌入到优化代码中。 
+当我们将 home 对象移出存储它的 `JSFunction` 时，优化的代码变得更加优化。它现在存储在类上下文中，这使得 TurboFan 尽可能将其作为常量嵌入到优化代码中。
 
 ## `super` 的其它用途
 
-`super` 内部对象字面量方法的工作方式与内部类方法一样，并进行了类似的优化。 
+`super` 内部对象字面量方法的工作方式与内部类方法一样，并进行了类似的优化。
 
 ```javascript
 const myproto = {
-  __proto__: { 'x': 100 },
-  m() { return super.x; }
+  __proto__: { x: 100 },
+  m() {
+    return super.x;
+  },
 };
 const o = { __proto__: myproto };
 o.m(); // returns 100
 ```
 
-当然还有我们没有优化的极端情况。 比如写超级属性（`super.x = ...`）就没有优化。 此外，使用 mixins 会使访问站点变态，导致超级属性访问速度变慢： 
+当然还有我们没有优化的极端情况。 比如写超级属性（`super.x = ...`）就没有优化。 此外，使用 mixins 会使访问站点变态，导致超级属性访问速度变慢：
 
 ```javascript
 function createMixin(base) {
   class Mixin extends base {
-    m() { return super.m() + 1; }
+    m() {
+      return super.m() + 1;
+    }
     //                ^ this access site is megamorphic
   }
   return Mixin;
 }
 
 class Base {
-  m() { return 0; }
+  m() {
+    return 0;
+  }
 }
 
 const myClass = createMixin(
-  createMixin(
-    createMixin(
-      createMixin(
-        createMixin(Base)
-      )
-    )
-  )
+  createMixin(createMixin(createMixin(createMixin(Base))))
 );
-(new myClass()).m();
+new myClass().m();
 ```
 
-为了确保所有面向对象的模式尽可能快，还有很多工作要做——请继续关注进一步的优化！ 
+为了确保所有面向对象的模式尽可能快，还有很多工作要做——请继续关注进一步的优化！

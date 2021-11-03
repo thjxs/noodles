@@ -284,11 +284,11 @@ Timsort，最初由 Tim Peters 在 2002 为 Python 开发，可称之为自适�
 
 执行内置函数时会根据不同的变量选择不同的代码路径。最通用的版本是可以处理任何对象，无论这个对象 “ JSProxy” 是否具有拦截器或者在检索，设置属性时需要进行原型链查找。
 
-在大多数情况下，通用路径相当慢，因为它需要考虑所有可能的情况。 但是，如果我们预先知道要排序的对象是仅包含Smis的简单`JSArray`，那么昂贵的`[[Get]]`和`[[Set]]`操作都可以由简单的Loads和Stores替换为` FixedArray`。它们的主要区别是 [元素类型](https://v8.dev/blog/elements-kinds) 。
+在大多数情况下，通用路径相当慢，因为它需要考虑所有可能的情况。 但是，如果我们预先知道要排序的对象是仅包含 Smis 的简单`JSArray`，那么昂贵的`[[Get]]`和`[[Set]]`操作都可以由简单的 Loads 和 Stores 替换为` FixedArray`。它们的主要区别是 [元素类型](https://v8.dev/blog/elements-kinds) 。
 
 目前问题是如何实现快速路径。 除了基于 `ElementsKind` 改变我们访问元素的方式之外，其余核心算法均保持不变。 一种我们可以做到的方法是在每个`call-site` 上分派到正确的“accessor”。 想象一下每个“加载”/“存储”都有一个`switch`，我们通过`switch`来选择不同快速路径的分支。
 
-另一个解决方案（这是尝试的第一种方法）是仅对每个快速路径复制一次整个内置函数，并内联正确的加载/存储访问方法。 事实证明，这种方法对于Timsort来说是行不通的，因为它是一个大型内置程序，而为每个快速路径制作一个副本总共需要106 KB，这对内置函数来说代价太高了。
+另一个解决方案（这是尝试的第一种方法）是仅对每个快速路径复制一次整个内置函数，并内联正确的加载/存储访问方法。 事实证明，这种方法对于 Timsort 来说是行不通的，因为它是一个大型内置程序，而为每个快速路径制作一个副本总共需要 106 KB，这对内置函数来说代价太高了。
 
 最终的解决方案略有不同。 每个快速路径的每个加载/存储操作都放入其自己的“ mini-builtin”中。 请参见代码示例，该示例显示了针对` FixedDoubleArray`的“加载”操作。
 
@@ -321,15 +321,15 @@ builtin Load<ElementsAccessor : type>(
 }
 ```
 
-快速路径最终变成了一组函数指针。 给所有相关的快速路径设置函数指针，意味着核心算法只需要一个副本。 虽然这大大减少了所需的代码空间（减少到20k），但是却以每个访问点上的间接分支为代价。 最近使用[embedded Builtins](https://v8.dev/blog/embedded-builtins)的更改甚至加剧了这种情况。
+快速路径最终变成了一组函数指针。 给所有相关的快速路径设置函数指针，意味着核心算法只需要一个副本。 虽然这大大减少了所需的代码空间（减少到 20k），但是却以每个访问点上的间接分支为代价。 最近使用[embedded Builtins](https://v8.dev/blog/embedded-builtins)的更改甚至加剧了这种情况。
 
 ### 排序状态
 
 ![](https://v8.dev/_img/array-sort/sort-state.svg)
 
-上图显示的“排序状态”是 `FixedArray` 在排序时所需的东西。每次调用 `Array#sort` ，将分配这样的排序状态。第4到7步是上节讨论的快速路径形成的一组函数指针。
+上图显示的“排序状态”是 `FixedArray` 在排序时所需的东西。每次调用 `Array#sort` ，将分配这样的排序状态。第 4 到 7 步是上节讨论的快速路径形成的一组函数指针。
 
-每次返回用户的JavaScript代码都会调用内置函数 `check` ，来检查我们是否还在使用快速路径。检查的是 “initial receiver map” 和 “initial receiver length” 。如果用户的代码（如：比较函数）修改了原始对象，我们只能放弃当前的排序，并重置所有的指针到通用版本然后重新排序。插槽 8 的 “bailout status” 是重置的信号。
+每次返回用户的 JavaScript 代码都会调用内置函数 `check` ，来检查我们是否还在使用快速路径。检查的是 “initial receiver map” 和 “initial receiver length” 。如果用户的代码（如：比较函数）修改了原始对象，我们只能放弃当前的排序，并重置所有的指针到通用版本然后重新排序。插槽 8 的 “bailout status” 是重置的信号。
 
 “compare” 的入口可以指向两个不同的内置函数。一个是调用用户提供的比较函数，另一个则是默认的比较函数，调用 `toString` 进行字典比较。
 
@@ -337,35 +337,34 @@ builtin Load<ElementsAccessor : type>(
 
 ### 性能权衡
 
+将排序从自托管的 JavaScript 迁移到 Torque 需要权衡性能。 现在用 Torque 编写的 `Array＃sort` 是一段静态编译的代码，这意味着我们仍然可以为某些 [`ElementsKind's`](https://v8.dev/blog/elements-kinds) 建立快速路径，但永远不会与高度优化的，可以利用类型反馈的 TurboFan 版本一样快。 另一方面，如果代码的质量不足以保证 JIT 编译或超大型的 `call-site` ，则我们将使用解释器或慢速/通用版本。 自托管 JavaScript 版本的解析，编译和可能的优化也是一种开销，不需要 Torque 去实现。
 
-将排序从自托管的 JavaScript 迁移到 Torque 需要权衡性能。 现在用 Torque 编写的 `Array＃sort`  是一段静态编译的代码，这意味着我们仍然可以为某些 [`ElementsKind's`](https://v8.dev/blog/elements-kinds) 建立快速路径，但永远不会与高度优化的，可以利用类型反馈的 TurboFan 版本一样快。 另一方面，如果代码的质量不足以保证JIT编译或超大型的 `call-site` ，则我们将使用解释器或慢速/通用版本。 自托管JavaScript版本的解析，编译和可能的优化也是一种开销，不需要 Torque 去实现。
-
-尽管用 Torque 的方法无法为排序获得相同的最佳性能，但是避免了性能下降。 结果是排序性能比以前更加可预测。 请记住，Torque的变化很大，除了针对CSA之外，它将来可能还会针对TurboFan，从而允许JIT编译用Torque编写的代码。
+尽管用 Torque 的方法无法为排序获得相同的最佳性能，但是避免了性能下降。 结果是排序性能比以前更加可预测。 请记住，Torque 的变化很大，除了针对 CSA 之外，它将来可能还会针对 TurboFan，从而允许 JIT 编译用 Torque 编写的代码。
 
 ### 微基准
 
 在开始实现 `Array#sort` 之前，我们添加了许多不同的微基准来更好地了解重新实现的影响。 第一张图显示了使用用户提供的比较功能对各种 ElementsKind 进行排序的“正常”用例。
 
-请记住，在这种情况下，JIT编译器可以完成很多工作，因为排序几乎是我们要做的。 这也使优化的编译器可以内联 JavaScript 版本的比较函数，而在Torque情况下，我们需要从内置调用 JavaScript 的调用开销。 尽管如此，我们几乎在所有情况下都表现更好。
+请记住，在这种情况下，JIT 编译器可以完成很多工作，因为排序几乎是我们要做的。 这也使优化的编译器可以内联 JavaScript 版本的比较函数，而在 Torque 情况下，我们需要从内置调用 JavaScript 的调用开销。 尽管如此，我们几乎在所有情况下都表现更好。
 
 ![](https://v8.dev/_img/array-sort/micro-bench-basic.svg)
 
-下一张图表显示了 Timsort 在处理已完全排序的数组或具有已单向或另一排序的子序列的数组时的影响。 该图表以 Quicksort 为基准，并显示了Timsort的加速（在“ DownDown”情况下，数组由两个反向排序的序列组成，则达到17倍）。 可以看出，在随机数据的情况下，即使我们正在对`PACKED_SMI_ELEMENTS` 进行排序，Timsort在所有其他情况下都表现更好，其中Quicksort在上面的微基准测试中胜过Timsort。
+下一张图表显示了 Timsort 在处理已完全排序的数组或具有已单向或另一排序的子序列的数组时的影响。 该图表以 Quicksort 为基准，并显示了 Timsort 的加速（在“ DownDown”情况下，数组由两个反向排序的序列组成，则达到 17 倍）。 可以看出，在随机数据的情况下，即使我们正在对`PACKED_SMI_ELEMENTS` 进行排序，Timsort 在所有其他情况下都表现更好，其中 Quicksort 在上面的微基准测试中胜过 Timsort。
 
 ![](https://v8.dev/_img/array-sort/micro-bench-presorted.svg)
 
-### Web工具基准
+### Web 工具基准
 
-[Web工具基准](https://github.com/v8/web-tooling-benchmark) 是Web开发人员通常使用的工具工作负载的集合，例如Babel和TypeScript。 该图表使用JavaScript Quicksort作为基线，并比较了Timsort的提速情况。 在几乎所有基准测试中，除chai之外，我们都保持相同的性能。
+[Web 工具基准](https://github.com/v8/web-tooling-benchmark) 是 Web 开发人员通常使用的工具工作负载的集合，例如 Babel 和 TypeScript。 该图表使用 JavaScript Quicksort 作为基线，并比较了 Timsort 的提速情况。 在几乎所有基准测试中，除 chai 之外，我们都保持相同的性能。
 
 ![](https://v8.dev/_img/array-sort/web-tooling-benchmark.svg)
 
-chai基准测试将其三分之一的时间花费在单个比较函数（字符串距离计算）中。 基准是chai本身的测试套件。 由于数据的原因，在这种情况下，Timsort需要进行更多的比较，这会对整体运行时间产生更大的影响，因为在特定的比较函数中花费了很大一部分时间。
+chai 基准测试将其三分之一的时间花费在单个比较函数（字符串距离计算）中。 基准是 chai 本身的测试套件。 由于数据的原因，在这种情况下，Timsort 需要进行更多的比较，这会对整体运行时间产生更大的影响，因为在特定的比较函数中花费了很大一部分时间。
 
 ### 内存的影响
 
-在浏览约50个网站（在移动和台式机上）时分析V8堆快照均未显示任何内存退化或改进。 一方面，这令人惊讶：从Quicksort切换到Timsort引入了对合并运行的临时阵列的需求，该阵列可能会比用于采样的临时阵列更大。 另一方面，这些临时数组的寿命很短（仅在“ sort”调用期间），可以在V8的新空间中快速分配和丢弃。
+在浏览约 50 个网站（在移动和台式机上）时分析 V8 堆快照均未显示任何内存退化或改进。 一方面，这令人惊讶：从 Quicksort 切换到 Timsort 引入了对合并运行的临时阵列的需求，该阵列可能会比用于采样的临时阵列更大。 另一方面，这些临时数组的寿命很短（仅在“ sort”调用期间），可以在 V8 的新空间中快速分配和丢弃。
 
 ## 结论
 
-总而言之，我们对使用Torque实现的Timsort的算法特性和可预测的性能行为感觉更好。 Timsort从V8 v7.0和Chrome 70开始可用。排序愉快！
+总而言之，我们对使用 Torque 实现的 Timsort 的算法特性和可预测的性能行为感觉更好。 Timsort 从 V8 v7.0 和 Chrome 70 开始可用。排序愉快！
