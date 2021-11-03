@@ -5,8 +5,8 @@ module.exports = {
   purge: ['./src/**/*.njk'],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    colors,
     extend: {},
-    colors: colors
   },
   variants: {
     extend: {},

@@ -4,7 +4,7 @@
   "description": "await fetch",
   "scripts": {
     "clean": "rm -rf dist",
-    "css": "cross-env NODE_ENV=production postcss main.css -o dist/css/main.css ",
+    "css": "cross-env NODE_ENV=production tailwindcss -i ./main.css -o ./dist/css/main.css --minify",
     "js": "terser main.js -o dist/main.js",
     "build": "eleventy && npm run css && npm run js",
     "watch": "eleventy --watch",
@@ -30,9 +30,8 @@
     "markdown-it": "^12.0.6",
     "markdown-it-anchor": "^8.1.0",
     "markdown-it-implicit-figures": "^0.10.0",
-    "minify-xml": "^2.5.0",
-    "postcss": "^8.2.13",
-    "postcss-cli": "^8.3.1",
+    "minify-xml": "^3.2.0",
+    "prettier": "^2.4.1",
     "tailwindcss": "^2.1.2",
     "terser": "^5.7.0"
   }
