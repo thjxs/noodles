@@ -18,9 +18,9 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@11ty/eleventy": "^0.12.1",
+    "@11ty/eleventy": "^1.0.0",
     "@11ty/eleventy-plugin-rss": "^1.1.1",
-    "@11ty/eleventy-plugin-syntaxhighlight": "^3.1.0",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^4.0.0",
     "autoprefixer": "^10.2.5",
     "cross-env": "^7.0.3",
     "cssnano": "^5.0.2",
@@ -30,9 +30,8 @@
     "markdown-it": "^12.0.6",
     "markdown-it-anchor": "^8.1.0",
     "markdown-it-implicit-figures": "^0.10.0",
-    "minify-xml": "^3.2.0",
-    "prettier": "^2.4.1",
-    "tailwindcss": "^2.1.2",
+    "minify-xml": "^3.3.1",
+    "tailwindcss": "^3.0.23",
     "terser": "^5.7.0"
   }
 }
