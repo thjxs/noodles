@@ -1,14 +1,6 @@
-const colors = require('tailwindcss/colors')
-
 module.exports = {
-  mode: 'jit',
-  purge: ['./src/**/*.njk'],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./*.js', './src/**/*.njk'],
   theme: {
-    colors,
-    extend: {},
-  },
-  variants: {
     extend: {},
   },
   plugins: [],
