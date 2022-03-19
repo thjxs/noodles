@@ -86,7 +86,7 @@ try {
 
 ## 这不是已经在 DevTools 中工作了吗？
 
-确实如此！ [Chrome DevTools](https://developers.google.com/web/updates/2017/08/devtools-release-notes#await), [Node.js](https://github.com/nodejs/node/issues/13209)、[Node.js](https://github.com/nodejs/node/issues/13209) 和 Safari Web Inspector 中的 REPL 支持顶层`await`已经有一段时间了。 但是，此功能是非标准的，仅限于 REPL！ 它不同于顶层的 `await` 提议，后者是语言规范的一部分并且仅适用于模块。 要以完全匹配规范提案语义的方式测试依赖于顶层 `await` 的生产代码，请确保在您的实际应用程序中进行测试，而不仅仅是在 DevTools 或 Node.js REPL 中！
+确实如此！ [Chrome DevTools](https://developers.google.com/web/updates/2017/08/devtools-release-notes#await), [Node.js](https://github.com/nodejs/node/issues/13209) 和 Safari Web Inspector 中的 REPL 支持顶层`await`已经有一段时间了。 但是，此功能是非标准的，仅限于 REPL！ 它不同于顶层的 `await` 提议，后者是语言规范的一部分并且仅适用于模块。 要以完全匹配规范提案语义的方式测试依赖于顶层 `await` 的生产代码，请确保在您的实际应用程序中进行测试，而不仅仅是在 DevTools 或 Node.js REPL 中！
 
 ## Isn’t top-level await a footgun?
 
