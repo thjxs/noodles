@@ -1,39 +1,48 @@
 ---
-title: "关于电脑的备忘录"
+title: "关于电脑初始化的备忘录"
 author: "Tan ([@thjxs](https://github.com/thjxs))"
 date: 2021-08-12
 tags:
   - Develop
-description: "适用于 Windows 系统的前端开发及日常娱乐"
+description: "适用于 Windows PC 的日常开发"
 ---
 
 ## 开始之前
 
-准备全新的 `Windows` 系统及以下列出的软件，并一一安装
+###  软件安装
 
-- [Visual Studio Code - Code Editing. Redefined](https://code.visualstudio.com/)
-- [Node.js (nodejs.org)](https://nodejs.org/en/)
-- [Sublime Text - Text Editing, Done Right](https://www.sublimetext.com/)
-- [Sublime Merge | Git client from the makers of Sublime Text](https://www.sublimemerge.com/)
-- [7-Zip](https://www.7-zip.org/)
-- [Yarn2](https://yarnpkg.com/) or [Yarn 1](https://classic.yarnpkg.com/lang/en/)
-- [Typora — a markdown editor, markdown reader.](https://typora.io/)
-- [Windows Terminal](https://www.microsoft.com/zh-cn/p/windows-terminal/9n0dx20hk701?rtc=1&activetab=pivot:overviewtab)
-- [Bitwarden Open Source Password Manager | Bitwarden](https://bitwarden.com/)
+- [Install via install.sh](https://gist.github.com/thjxs/4ca19faf4aafe1c058a2b92f2a9b336c)
 - [Drawboard: Easier PDF markup software](https://www.drawboard.com/)
-- [Git (git-scm.com)](https://git-scm.com/)
 - [Microsoft To Do: Lists, Tasks & Reminders](https://www.microsoft.com/zh-cn/p/microsoft-to-do-lists-tasks-reminders/9nblggh5r558#activetab=pivot:overviewtab)
 - [Postman](https://www.postman.com/downloads/)
-- [Steam (steampowered.com)](https://store.steampowered.com/)
-- [Graphviz](http://graphviz.org/)
+- [Sublime Text - Text Editing, Done Right](https://www.sublimetext.com/)
+- [Sublime Merge | Git client from the makers of Sublime Text](https://www.sublimemerge.com/)
 
-## 环境变量的设置
+## 安装WSL
 
-为了让某些软件能够在命令行的使用，添加下列路径到用户的环境变量或者系统变量
+```bash
+# 查找发行版
+wsl --list --online
 
+# 安装喜欢的发行版
+wsl --install -d <name>
+
+# 安装 nvm 来管理 nodejs
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+nvm install --lts
+```
+
+## Windows 环境变量的设置
+
+添加下列路径到用户的环境变量或者系统变量
+
+- `C:\Program Files\Sublime Merge`
 - `C:\Program Files\Sublime Text`
 - `C:\Program Files\Graphviz\bin`
 - `C:\Program Files\7-Zip`
+
+现在你可以在命令行使用 `smerge`, `subl`, `dot`, `7z`
 
 ## 软件配置
 
@@ -64,15 +73,6 @@ description: "适用于 Windows 系统的前端开发及日常娱乐"
 - EditorConfig
 - Emmet
 - Package Control
-
-### bash
-
-.bashrc
-
-```bash
-alias merge="start merge"
-alias typora="start typora"
-```
 
 ### vim
 
@@ -152,6 +152,7 @@ endfunction
 ### git bash
 
 ```bash
+# file path .config/git/git-prompt.sh
 PS1='\[\033]0;$PWD\007\]' # set window title
 # PS1="$PS1"'\n'                 # new line
 PS1="$PS1"'\[\033[32m\]'       # change to green
